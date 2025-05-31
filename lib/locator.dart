@@ -17,10 +17,10 @@ TokenManager get tokenService => locator<TokenManager>();
 
 void setupLocator() {
   // locator.registerLazySingleton(() => FirebaseRemoteHelper());
-  locator.registerLazySingleton(() => AppConfigService());
 
   // locator.registerLazySingleton(() => PreferenceService());
   // locator.registerLazySingleton(() => NetworkService());
+  locator.registerLazySingleton<AppConfigService>(() => AppConfigService());
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => TokenManager());
   // locator.registerLazySingleton(() => PageStorageService());

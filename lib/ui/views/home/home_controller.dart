@@ -5,21 +5,17 @@ import 'package:get/get.dart';
 import '../../../core/enum/view_state.dart';
 import '../../../core/model/ecommerce/product.dart';
 import '../../../core/model/user_model.dart';
+import '../../../locator.dart';
 import '../../../services/api_base_service.dart';
+import '../../../services/appconfig_service.dart';
 import '../../../services/request_method.dart';
 
 class HomeController extends GetxController {
   Rx<SectionType> selectedSection = SectionType.updates.obs;
-
   final RxInt selectedChipIndex = 0.obs;
+  RxList<String> bannerImages = <String>[].obs;
 
-
-  // Banners
-  final List<String> bannerImages = [
-    "https://img.tradeindia.com/new_website1/tradeshowslandingpage/thejewelleryshow/new-banner.jpg", // Light decor
-    "https://shivamjewelsandart.com/public/frontend/assets/images/inner-banner/exhibition-banner.png", // Jewelry flatlay
-    "https://www.jewellermagazine.com/dbimages/156000/156442/156442-950px.png?m=133655721260000000", // Light workspace
-  ];
+  final config = locator<AppConfigService>().config;
 
   final List<String> quotes = [
     "Adorn yourself with brilliance — let every jewel speak your story.",
@@ -34,14 +30,10 @@ class HomeController extends GetxController {
     "You don’t just wear jewelry. You wear legacy, love, and light.",
   ];
 
-
   RxInt currentQuoteIndex = 0.obs;
   Timer? _timer;
 
   RxInt currentImageIndex = 0.obs;
-
-  // Profile
-  RxString profileImage = ''.obs;
 
   // Products
   var products = <Products>[].obs;
@@ -95,9 +87,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
-    profileImage.value =
-        'https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg';
+    bannerImages.clear();
 
     if (_timer == null || !_timer!.isActive) {
       _timer = Timer.periodic(Duration(seconds: 2), (timer) {
@@ -105,10 +95,20 @@ class HomeController extends GetxController {
       });
     }
 
+    // Load banners from remote config if available, else fallback to default
+    print("======== ${config.banners}");
+    if (config.banners != null && config.banners!.isNotEmpty) {
+      bannerImages.assignAll(config.banners!);
+    } else {
+      print("Empty");
+      bannerImages.assignAll([
+        "https://img.tradeindia.com/new_website1/tradeshowslandingpage/thejewelleryshow/new-banner.jpg",
+        "https://shivamjewelsandart.com/public/frontend/assets/images/inner-banner/exhibition-banner.png",
+        "https://www.jewellermagazine.com/dbimages/156000/156442/156442-950px.png?m=133655721260000000",
+      ]);
+    }
 
     productFetch();
-    print("INIT ENTERED");
-    //  startBannerAutoSlide();
   }
 
   void startBannerAutoSlide() {

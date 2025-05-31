@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "190558539715",
+    "project_id": "tjw-prod-67012",
+    "storage_bucket": "tjw-prod-67012.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190558539715:android:002752800dde28e132b776",
+        "android_client_info": {
+          "package_name": "com.ue.tjw.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEd13KRwXOKaAUl4IeZBArSwu-YkjVtt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
